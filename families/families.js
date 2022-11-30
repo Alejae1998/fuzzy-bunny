@@ -9,19 +9,43 @@ logoutButton.addEventListener('click', () => {
     logout();
 });
 
-function displayFamilies() {
+async function displayFamilies() {
     // fetch families from supabase
+    const families = await getFamilies();
     // clear out the familiesEl
+    familiesEl.textContent = '';
     // loop through each family and for each family:
-    // create three elements for each family, one for the whole family, one to hold the name, and one to hold the bunnies
-    // your HTML Element should look like this:
-    // <div class="family">
-    //    <h3>the Garcia family</h3>
-    //    <div class="bunnies">
-    //        <div class="bunny">Fluffy</div>
-    //        <div class="bunny">Bob</div>
-    //    </div>
-    // </div>
+    for (let family of families) {
+        // create three elements for each family, one for the whole family, one to hold the name, and one to hold the bunnies
+        // your HTML Element should look like this:
+        // <div class="family">
+        //    <h3>the Garcia family</h3>
+        //    <div class="bunnies">
+        //        <div class="bunny">Fluffy</div>
+        //        <div class="bunny">Bob</div>
+        //    </div>
+        // </div>
+        const familyEl = document.createElement('div');
+        familyEl.classList.add('family');
+        const nameEl = document.createElement('h3');
+        nameEl.textContent = family.name;
+        const bunniesEl = document.createElement('div');
+        bunniesEl.classList.add('bunnies');
+
+        for (let bunny of family.fuzzy_bunnies) {
+            const bunnyEl = document.createElement('div');
+            bunnyEl.classList.add('bunny');
+            bunnyEl.textContent = bunny.name;
+            bunnyEl.addEventListener('click', async () => {
+                await deleteBunny(bunny.id);
+                displayFamilies();
+            });
+            bunniesEl.append(bunnyEl);
+        }
+        familyEl.append(bunniesEl, nameEl);
+        familiesEl.append(familyEl);
+    }
+    displayFamilies();
     // add the bunnies css class to the bunnies el, and family css class to the family el
     // put the family name in the name element
     // for each of this family's bunnies
