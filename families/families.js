@@ -38,24 +38,24 @@ async function displayFamilies() {
             bunnyEl.textContent = bunny.name;
             bunnyEl.addEventListener('click', async () => {
                 await deleteBunny(bunny.id);
-
-                displayFamilies;
+                const updatedFamilies = await getFamilies();
+                displayFamilies(updatedFamilies);
             });
             bunniesEl.append(bunnyEl);
         }
         familyEl.append(bunniesEl, nameEl);
         familiesEl.append(familyEl);
     }
-    displayFamilies();
-    // add the bunnies css class to the bunnies el, and family css class to the family el
-    // put the family name in the name element
-    // for each of this family's bunnies
-    //    make an element with the css class 'bunny', and put the bunny's name in the text content
-    //    add an event listener to the bunny el. On click, delete the bunny, then refetch and redisplay all families.
-    // append this bunnyEl to the bunniesEl
-    // append the bunniesEl and nameEl to the familyEl
-    // append the familyEl to the familiesEl
 }
+displayFamilies();
+// add the bunnies css class to the bunnies el, and family css class to the family el
+// put the family name in the name element
+// for each of this family's bunnies
+//    make an element with the css class 'bunny', and put the bunny's name in the text content
+//    add an event listener to the bunny el. On click, delete the bunny, then refetch and redisplay all families.
+// append this bunnyEl to the bunniesEl
+// append the bunniesEl and nameEl to the familyEl
+// append the familyEl to the familiesEl
 
 window.addEventListener('load', async () => {
     const families = await getFamilies();
