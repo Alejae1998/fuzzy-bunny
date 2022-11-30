@@ -38,7 +38,8 @@ async function displayFamilies() {
             bunnyEl.textContent = bunny.name;
             bunnyEl.addEventListener('click', async () => {
                 await deleteBunny(bunny.id);
-                displayFamilies();
+
+                displayFamilies;
             });
             bunniesEl.append(bunnyEl);
         }
