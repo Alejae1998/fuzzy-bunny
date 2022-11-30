@@ -13,9 +13,10 @@ form.addEventListener('submit', async (e) => {
     const familyId = formData.get('family-id');
 
     // use createBunny to create a bunny with this name and family id
-    await createBunny({ name: name, family_id: familyId });
-
     form.reset();
+    await createBunny({ name: name, family_id: familyId });
+    window.location.replace('../families');
+    return false;
 });
 
 window.addEventListener('load', async () => {
@@ -31,6 +32,8 @@ window.addEventListener('load', async () => {
         option.textContent = family.name;
         select.append(option);
     }
+    // window.location.replace('../families');
+    // return false;
     // create an option tag
     // set the option's value and text content
     // and append the option to the select
